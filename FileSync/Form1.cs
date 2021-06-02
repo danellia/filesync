@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Windows.Forms;
-using System.Xml;
 
 namespace FileSync
 {
     public partial class Form1 : Form
     {
-        string dir1;
-        string dir2;
+        Folder dir1;
+        Folder dir2;
+
         public Form1()
         {
             InitializeComponent();
@@ -27,7 +21,7 @@ namespace FileSync
                 if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     textBox1.Text = fbd.SelectedPath;
-                    dir1 = fbd.SelectedPath;
+                    dir1 = new Folder(fbd.SelectedPath);
                 }
             }
         }
@@ -39,59 +33,45 @@ namespace FileSync
                 if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     textBox2.Text = fbd.SelectedPath;
-                    dir2 = fbd.SelectedPath;
+                    dir2 = new Folder(fbd.SelectedPath);
                 }
             }
-        }
-
-        public static void CopyFile(string dir1, string dir2, string file)
-        {
-            File.Copy(Path.Combine(dir1, file), Path.Combine(dir2, file));
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            var files1 = Directory.GetFiles(dir1);
-            var files2 = Directory.GetFiles(dir2);
-   
-            foreach (var file1 in files1)
+            foreach (var file1 in dir1.files)
             {
-                FileInfo currentFile1 = new FileInfo(file1);
-                DateTimeOffset lastWriteTime1 = currentFile1.LastWriteTime;
-                string filename1 = currentFile1.Name;
-                if (!File.Exists(Path.Combine(dir2, filename1)))
+                FileInformation currentFile1 = new FileInformation(file1);
+                dir2.copyTo = Path.Combine(dir2.path, currentFile1.filename);
+                if (!File.Exists(dir2.copyTo))
                 {
-                    File.Copy(file1, Path.Combine(dir2, filename1));
-                } else
+                    currentFile1.copyTo(dir2);
+                }
+                else
                 {
-                    FileInfo currentFile2 = new FileInfo(Path.Combine(dir2, filename1));
-                    DateTimeOffset lastWriteTime2 = currentFile2.LastWriteTime;
-                    string filename2 = currentFile2.Name;
-                    if (lastWriteTime1 >= lastWriteTime2)
+                    FileInformation currentFile2 = new FileInformation(dir2.copyTo);
+                    if (currentFile1.lastWriteTime >= currentFile2.lastWriteTime)
                     {
-                        File.Delete(Path.Combine(dir2, filename1));
-                        File.Copy(file1, Path.Combine(dir2, filename1));
+                        File.Delete(dir2.copyTo);
+                        currentFile1.copyTo(dir2);
                     }
                     else
                     {
                         File.Delete(file1);
-                        File.Copy(Path.Combine(dir2, filename1), file1);
+                        currentFile1.copyFrom(dir2);
                     }
                 }
-                foreach (var file2 in files2)
+                foreach (var file2 in dir2.files)
                 {
-                    FileInfo currentFile2 = new FileInfo(file2);
-                    DateTimeOffset lastWriteTime2 = currentFile2.LastWriteTime;
-                    string filename2 = currentFile2.Name;
-                    if (!File.Exists(Path.Combine(dir1, filename2)))
+                    FileInformation currentFile2 = new FileInformation(file2);
+                    dir1.copyTo = Path.Combine(dir1.path, currentFile2.filename);
+                    if (!File.Exists(dir1.copyTo))
                     {
-                        File.Copy(file2, Path.Combine(dir1, filename2));
+                        currentFile2.copyTo(dir1);
                     }
                 }
             }
-
-            Form2 form2 = new Form2();
-            form2.Show();
         }
     }
 }
