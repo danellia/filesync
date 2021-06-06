@@ -8,6 +8,9 @@ namespace FileSync
     {
         Folder dir1;
         Folder dir2;
+        LogXML logXML;
+        LogJSON logJSON;
+        SyncEntryJSON syncJSON;
 
         public Form1()
         {
@@ -40,38 +43,44 @@ namespace FileSync
 
         private void button3_Click(object sender, EventArgs e)
         {
+            logXML = new LogXML();
+            logJSON = new LogJSON();
+            syncJSON = new SyncEntryJSON();
+
             foreach (var file1 in dir1.files)
             {
                 FileInformation currentFile1 = new FileInformation(file1);
-                dir2.copyTo = Path.Combine(dir2.path, currentFile1.filename);
+                dir2.copyTo = Path.Combine(dir2.path, currentFile1.fileName);
                 if (!File.Exists(dir2.copyTo))
                 {
-                    currentFile1.copyTo(dir2);
+                    currentFile1.copyTo(dir2, logXML, syncJSON);
                 }
                 else
                 {
                     FileInformation currentFile2 = new FileInformation(dir2.copyTo);
                     if (currentFile1.lastWriteTime >= currentFile2.lastWriteTime)
                     {
-                        File.Delete(dir2.copyTo);
-                        currentFile1.copyTo(dir2);
+                        currentFile1.overwrite(dir2, logXML, syncJSON, 1);
                     }
                     else
                     {
-                        File.Delete(file1);
-                        currentFile1.copyFrom(dir2);
+                        currentFile1.overwrite(dir2, logXML, syncJSON, 2);
                     }
                 }
                 foreach (var file2 in dir2.files)
                 {
                     FileInformation currentFile2 = new FileInformation(file2);
-                    dir1.copyTo = Path.Combine(dir1.path, currentFile2.filename);
+                    dir1.copyTo = Path.Combine(dir1.path, currentFile2.fileName);
                     if (!File.Exists(dir1.copyTo))
                     {
-                        currentFile2.copyTo(dir1);
+                        currentFile2.copyTo(dir1, logXML, syncJSON);
                     }
                 }
             }
+            logJSON.serialize(syncJSON);
+
+            Form2 form2 = new Form2();
+            form2.Show();
         }
     }
 }

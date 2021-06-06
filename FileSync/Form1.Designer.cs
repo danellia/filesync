@@ -40,41 +40,41 @@ namespace FileSync
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(112, 12);
+            this.textBox1.Location = new System.Drawing.Point(99, 10);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(329, 23);
+            this.textBox1.Size = new System.Drawing.Size(283, 20);
             this.textBox1.TabIndex = 0;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(112, 58);
+            this.textBox2.Location = new System.Drawing.Point(99, 50);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(329, 23);
+            this.textBox2.Size = new System.Drawing.Size(283, 20);
             this.textBox2.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 15);
+            this.label1.Location = new System.Drawing.Point(18, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(85, 15);
+            this.label1.Size = new System.Drawing.Size(81, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Директория 1:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 61);
+            this.label2.Location = new System.Drawing.Point(18, 53);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(85, 15);
+            this.label2.Size = new System.Drawing.Size(81, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Директория 2:";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(452, 12);
+            this.button1.Location = new System.Drawing.Point(387, 10);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 22);
+            this.button1.Size = new System.Drawing.Size(86, 20);
             this.button1.TabIndex = 4;
             this.button1.Text = "Выбрать...";
             this.button1.UseVisualStyleBackColor = true;
@@ -82,9 +82,9 @@ namespace FileSync
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(452, 58);
+            this.button2.Location = new System.Drawing.Point(387, 50);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 22);
+            this.button2.Size = new System.Drawing.Size(86, 20);
             this.button2.TabIndex = 5;
             this.button2.Text = "Выбрать...";
             this.button2.UseVisualStyleBackColor = true;
@@ -92,9 +92,9 @@ namespace FileSync
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(21, 100);
+            this.button3.Location = new System.Drawing.Point(18, 76);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(531, 22);
+            this.button3.Size = new System.Drawing.Size(455, 30);
             this.button3.TabIndex = 6;
             this.button3.Text = "Синхронизация";
             this.button3.UseVisualStyleBackColor = true;
@@ -102,9 +102,9 @@ namespace FileSync
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(573, 134);
+            this.ClientSize = new System.Drawing.Size(491, 116);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
